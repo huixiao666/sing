@@ -1,0 +1,1500 @@
+{
+  "dns": {
+    "servers": [
+      {
+        "tag": "dns_proxy",
+        "address": "tcp://1.1.1.1",
+        "address_resolver": "dns_resolver",
+        "strategy": "ipv4_only",
+        "detour": "🚀 节点选择"
+      },
+      {
+        "tag": "dns_direct",
+        "address": "https://dns.alidns.com/dns-query",
+        "address_resolver": "dns_resolver",
+        "strategy": "ipv4_only",
+        "detour": "DIRECT"
+      },
+      {
+        "tag": "dns_resolver",
+        "address": "223.5.5.5",
+        "detour": "DIRECT"
+      },
+      {
+        "tag": "dns_success",
+        "address": "rcode://success"
+      },
+      {
+        "tag": "dns_refused",
+        "address": "rcode://refused"
+      },
+      {
+        "tag": "dns_fakeip",
+        "address": "fakeip"
+      }
+    ],
+    "rules": [
+      {
+        "outbound": "any",
+        "server": "dns_resolver"
+      },
+      {
+        "rule_set": "geolocation-!cn",
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "server": "dns_fakeip"
+      },
+      {
+        "rule_set": "geolocation-!cn",
+        "query_type": [
+          "CNAME"
+        ],
+        "server": "dns_proxy"
+      },
+      {
+        "query_type": [
+          "A",
+          "AAAA",
+          "CNAME"
+        ],
+        "invert": true,
+        "server": "dns_refused",
+        "disable_cache": true
+      }
+    ],
+    "final": "dns_direct",
+    "independent_cache": true,
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
+    }
+  },
+  "ntp": {
+    "enabled": true,
+    "server": "time.apple.com",
+    "server_port": 123,
+    "interval": "30m",
+    "detour": "DIRECT"
+  },
+  "inbounds": [
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "0.0.0.0",
+      "listen_port": 2080
+    },
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "address": "172.19.0.1/30",
+      "auto_route": true,
+      "strict_route": true,
+      "stack": "mixed",
+      "sniff": true
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "selector",
+      "tag": "🚀 节点选择",
+      "outbounds": [
+        "DIRECT",
+        "REJECT",
+        "⚡ 自动选择",
+        "pbiuh4n5",
+        "efpo4jhc",
+        "f3fgnk5n",
+        "vlrzmij3",
+        "3horoq3z",
+        "kkb9cxs5",
+        "ut5j6wic",
+        "kj3ta109",
+        "4avlmkkp",
+        "4812tams",
+        "kxdl6c8t",
+        "5yglhbj3",
+        "di8bthgj",
+        "wh5aoqhz",
+        "c2220n2l",
+        "7o7negp0",
+        "3jkv51z6",
+        "p3tzyoi1",
+        "85q5edtk",
+        "4x2auunj",
+        "y6l8wle3",
+        "7wwddb7z",
+        "54d2s5wi",
+        "f05oyuhp",
+        "2rq78y10",
+        "59308k8q",
+        "wa2uezw1",
+        "my2d32lt",
+        "g8p3i08o",
+        "tk9brz3y",
+        "nv7kqe5m",
+        "aoel0qic",
+        "mdt3db22",
+        "qsqpw28p",
+        "oq9c5d3u",
+        "5azolnri",
+        "5a542nf9",
+        "mp0qpeqv",
+        "kw64g76h",
+        "7jtfaqgj",
+        "2xqqs8jl",
+        "kk9fc98y",
+        "ws9qcnqo",
+        "8lknstgw",
+        "sfcn8jj5",
+        "lbobxlit",
+        "bvt3bmgq",
+        "sca3fv5e"
+      ]
+    },
+    {
+      "type": "urltest",
+      "tag": "⚡ 自动选择",
+      "outbounds": [
+        "pbiuh4n5",
+        "efpo4jhc",
+        "f3fgnk5n",
+        "vlrzmij3",
+        "3horoq3z",
+        "kkb9cxs5",
+        "ut5j6wic",
+        "kj3ta109",
+        "4avlmkkp",
+        "4812tams",
+        "kxdl6c8t",
+        "5yglhbj3",
+        "di8bthgj",
+        "wh5aoqhz",
+        "c2220n2l",
+        "7o7negp0",
+        "3jkv51z6",
+        "p3tzyoi1",
+        "85q5edtk",
+        "4x2auunj",
+        "y6l8wle3",
+        "7wwddb7z",
+        "54d2s5wi",
+        "f05oyuhp",
+        "2rq78y10",
+        "59308k8q",
+        "wa2uezw1",
+        "my2d32lt",
+        "g8p3i08o",
+        "tk9brz3y",
+        "nv7kqe5m",
+        "aoel0qic",
+        "mdt3db22",
+        "qsqpw28p",
+        "oq9c5d3u",
+        "5azolnri",
+        "5a542nf9",
+        "mp0qpeqv",
+        "kw64g76h",
+        "7jtfaqgj",
+        "2xqqs8jl",
+        "kk9fc98y",
+        "ws9qcnqo",
+        "8lknstgw",
+        "sfcn8jj5",
+        "lbobxlit",
+        "bvt3bmgq",
+        "sca3fv5e"
+      ]
+    },
+    {
+      "type": "direct",
+      "tag": "DIRECT"
+    },
+    {
+      "type": "block",
+      "tag": "REJECT"
+    },
+    {
+      "type": "dns",
+      "tag": "dns-out"
+    },
+    {
+      "tag": "pbiuh4n5",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 56082,
+      "uuid": "9d6857e7-b654-4626-a564-7ea1f06e9fa3",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {
+        "type": "ws",
+        "path": "/pbiuh4n5",
+        "headers": {
+          "Host": ""
+        }
+      }
+    },
+    {
+      "tag": "efpo4jhc",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 11242,
+      "uuid": "0c8c5ec2-3db9-4fc5-ab06-bc31a2972189",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {
+        "type": "ws",
+        "path": "/efpo4jhc",
+        "headers": {
+          "Host": "服务器IP或域名"
+        }
+      },
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false
+      }
+    },
+    {
+      "tag": "f3fgnk5n",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 51628,
+      "uuid": "fdb64d0e-6d8c-443e-9e27-35c1ba5a1015",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {}
+    },
+    {
+      "tag": "vlrzmij3",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 38667,
+      "uuid": "e2377025-271a-4a50-b1f2-ba4371ff7f08",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {}
+    },
+    {
+      "tag": "3horoq3z",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 39141,
+      "uuid": "e721f4be-bcf2-419c-8dbd-7dca47d59da1",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {}
+    },
+    {
+      "type": "vless",
+      "tag": "kkb9cxs5",
+      "server": "服务器IP或域名",
+      "server_port": 20983,
+      "uuid": "d17a596d-1fd5-4b29-a200-267a6d7b2b99",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "伪装网站",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "tgIedQ8YjJoi5HckDXtlxdVdlST2M8SwEKf6gCkipko",
+          "short_id": "dc68487e79"
+        }
+      },
+      "network": "tcp",
+      "flow": "xtls-rprx-vision"
+    },
+    {
+      "type": "vless",
+      "tag": "ut5j6wic",
+      "server": "服务器IP或域名",
+      "server_port": 44704,
+      "uuid": "780c5f67-b734-4d2d-b767-0c8284d6af52",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "network": "tcp",
+      "flow": "xtls-rprx-vision"
+    },
+    {
+      "type": "vless",
+      "tag": "kj3ta109",
+      "server": "服务器IP或域名",
+      "server_port": 16644,
+      "uuid": "2c77c232-b37e-4220-9a14-01a6bda10342",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/2c77c232"
+      },
+      "network": "tcp"
+    },
+    {
+      "type": "vless",
+      "tag": "4avlmkkp",
+      "server": "服务器IP或域名",
+      "server_port": 57669,
+      "uuid": "db3844e2-4e75-463f-b6b0-3f952e28edce",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "grpc",
+        "service_name": "passgrpc57669"
+      },
+      "network": "tcp"
+    },
+    {
+      "type": "vless",
+      "tag": "4812tams",
+      "server": "服务器IP或域名",
+      "server_port": 27520,
+      "uuid": "113fad5d-7639-4278-9f07-18a3838c2ef8",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "伪装网站",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "-sOdmdsgXbMtDWyrvxfwbJ9RslF48EvpxdnimL2bSyQ",
+          "short_id": "9cbaa08d"
+        }
+      },
+      "transport": {
+        "type": "grpc",
+        "service_name": "passgrpc27520"
+      },
+      "network": "tcp"
+    },
+    {
+      "type": "trojan",
+      "tag": "kxdl6c8t",
+      "server": "服务器IP或域名",
+      "server_port": 22866,
+      "password": "XA0wFMvLu3",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "5yglhbj3",
+      "server": "服务器IP或域名",
+      "server_port": 39065,
+      "password": "SJaJQzOn28",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "伪装网站",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "ryCE7HFoSRpyXtt-pWYkyxazIB1k9Rpo2qCDJlaC11g",
+          "short_id": "25512daeefbc52"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "di8bthgj",
+      "server": "服务器IP或域名",
+      "server_port": 12353,
+      "password": "aBtDqn14iW",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/aBtDqn14iW"
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "wh5aoqhz",
+      "server": "服务器IP或域名",
+      "server_port": 21540,
+      "password": "xmtSsVZSvO",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "grpc",
+        "service_name": "passgrpc21540"
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "c2220n2l",
+      "server": "服务器IP或域名",
+      "server_port": 44830,
+      "password": "nLQw0uTkiZ",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "伪装网站",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "4C92SRKFlxVtwFGomze4XeKvErLczKzOEBB_pRSc1zw",
+          "short_id": "3356be94"
+        }
+      },
+      "transport": {
+        "type": "grpc",
+        "service_name": "passgrpc44830"
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "7o7negp0",
+      "server": "服务器IP或域名",
+      "server_port": 23532,
+      "password": "Qe0udoomrb",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "httpupgrade",
+        "path": "/Qe0udoomrb"
+      }
+    },
+    {
+      "tag": "3jkv51z6",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 58911,
+      "uuid": "6c126e0e-351c-4dd3-bc0b-936686d6f9f2",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {
+        "type": "ws",
+        "path": "/3jkv51z6",
+        "headers": {
+          "Host": ""
+        }
+      }
+    },
+    {
+      "tag": "p3tzyoi1",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 27632,
+      "uuid": "dcd04307-0a85-4638-a588-7f8730b4f950",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {
+        "type": "ws",
+        "path": "/p3tzyoi1",
+        "headers": {
+          "Host": "服务器IP或域名"
+        }
+      },
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false
+      }
+    },
+    {
+      "tag": "85q5edtk",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 44735,
+      "uuid": "3a7fdd2d-7aa8-4034-832b-b479010f3e7a",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {}
+    },
+    {
+      "tag": "4x2auunj",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 33470,
+      "uuid": "7dbe6444-b338-44b8-8f2c-c43f57171e68",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {}
+    },
+    {
+      "tag": "y6l8wle3",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 11184,
+      "uuid": "2f50a0aa-71a7-4da5-bdb5-0e53f18b79c9",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {}
+    },
+    {
+      "type": "vless",
+      "tag": "7wwddb7z",
+      "server": "服务器IP或域名",
+      "server_port": 45159,
+      "uuid": "e32c500b-6d9d-4c14-b4da-0de04eb4da3e",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "network": "tcp",
+      "flow": "xtls-rprx-vision"
+    },
+    {
+      "type": "vless",
+      "tag": "54d2s5wi",
+      "server": "服务器IP或域名",
+      "server_port": 40791,
+      "uuid": "29801b13-b20e-49e0-8205-2cacb7a0b202",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "伪装网站",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "AAMw6aM82M22_A882KNR3FMs6ZQyG5YozIWkyZmimS8",
+          "short_id": "54e70827b6384d"
+        }
+      },
+      "network": "tcp",
+      "flow": "xtls-rprx-vision"
+    },
+    {
+      "type": "vless",
+      "tag": "f05oyuhp",
+      "server": "服务器IP或域名",
+      "server_port": 41156,
+      "uuid": "d21214db-4a36-407d-8f89-8d0377ea6b4e",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/f05oyuhp"
+      },
+      "network": "tcp"
+    },
+    {
+      "type": "vless",
+      "tag": "2rq78y10",
+      "server": "服务器IP或域名",
+      "server_port": 59113,
+      "uuid": "0d0a992e-9f85-404a-8f44-d56f9e969990",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "grpc",
+        "service_name": "passgrpc59113"
+      },
+      "network": "tcp"
+    },
+    {
+      "type": "vless",
+      "tag": "59308k8q",
+      "server": "服务器IP或域名",
+      "server_port": 10281,
+      "uuid": "6272ae14-5180-4222-ba92-633d2cb6a9d5",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "伪装网站",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "E3hJff44OMvepWt1OiLZNUjr3rFxZfTz-M6RU5S9P0M",
+          "short_id": "e3e2"
+        }
+      },
+      "transport": {
+        "type": "grpc",
+        "service_name": "passgrpc10281"
+      },
+      "network": "tcp"
+    },
+    {
+      "type": "trojan",
+      "tag": "wa2uezw1",
+      "server": "服务器IP或域名",
+      "server_port": 49583,
+      "password": "qKbkjSRCbQ",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "my2d32lt",
+      "server": "服务器IP或域名",
+      "server_port": 10295,
+      "password": "xRwtRGIPl2",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "伪装网站",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "RGTIrFqFdksHayQDl6uik31jDGzWJbbChOT-srxtmjo",
+          "short_id": "996de10fb0ee536f"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "g8p3i08o",
+      "server": "服务器IP或域名",
+      "server_port": 35276,
+      "password": "uyEpOQZO3A",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/uyEpOQZO3A"
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "tk9brz3y",
+      "server": "服务器IP或域名",
+      "server_port": 25862,
+      "password": "S37Gcy21rY",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "grpc",
+        "service_name": "passgrpc25862"
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "nv7kqe5m",
+      "server": "服务器IP或域名",
+      "server_port": 53948,
+      "password": "GhjlTo1fK5",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "伪装网站",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "lJm-4ttLiq_siDrSRYXWL-IVpYJbiZL236rbVTjBmmo",
+          "short_id": "144abc639036b6"
+        }
+      },
+      "transport": {
+        "type": "grpc",
+        "service_name": "passgrpc53948"
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "aoel0qic",
+      "server": "服务器IP或域名",
+      "server_port": 39662,
+      "password": "bckKRaH7b5",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "httpupgrade",
+        "path": "/bckKRaH7b5"
+      }
+    },
+    {
+      "tag": "mdt3db22",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 45487,
+      "uuid": "49e65f03-425d-4386-84e2-8c0e69e66d59",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {
+        "type": "ws",
+        "path": "/49e65f03",
+        "headers": {
+          "Host": ""
+        }
+      }
+    },
+    {
+      "tag": "qsqpw28p",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 30119,
+      "uuid": "fade1708-f444-4761-813b-67d04754712d",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {
+        "type": "ws",
+        "path": "/fade1708",
+        "headers": {
+          "Host": "服务器IP或域名"
+        }
+      },
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false
+      }
+    },
+    {
+      "tag": "oq9c5d3u",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 38177,
+      "uuid": "43e6af95-a226-4ede-999c-ac601547dfb7",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {}
+    },
+    {
+      "tag": "5azolnri",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 38823,
+      "uuid": "fc1b9bfc-ab3e-40dd-8e14-df808150735a",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {}
+    },
+    {
+      "tag": "5a542nf9",
+      "type": "vmess",
+      "server": "服务器IP或域名",
+      "server_port": 24232,
+      "uuid": "12a8f6af-b40d-4f29-829d-8bdcdf515201",
+      "alter_id": 0,
+      "security": "auto",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "transport": {}
+    },
+    {
+      "type": "vless",
+      "tag": "mp0qpeqv",
+      "server": "服务器IP或域名",
+      "server_port": 56070,
+      "uuid": "c9ad8a15-e83e-4065-b17c-a35950145551",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "伪装网站",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "ZVqCy_aKTLGjmwjQtpsAZvDngj3FoWVo1H1VJoI-CDc",
+          "short_id": "a5"
+        }
+      },
+      "network": "tcp",
+      "flow": "xtls-rprx-vision"
+    },
+    {
+      "type": "vless",
+      "tag": "kw64g76h",
+      "server": "服务器IP或域名",
+      "server_port": 15586,
+      "uuid": "8f2279a1-88b1-4b01-865d-b3ebd00eb218",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "network": "tcp",
+      "flow": "xtls-rprx-vision"
+    },
+    {
+      "type": "vless",
+      "tag": "7jtfaqgj",
+      "server": "服务器IP或域名",
+      "server_port": 17659,
+      "uuid": "c0891e86-4f4d-4bca-8f1f-53526a777cc2",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/c0891e86"
+      },
+      "network": "tcp"
+    },
+    {
+      "type": "vless",
+      "tag": "2xqqs8jl",
+      "server": "服务器IP或域名",
+      "server_port": 43757,
+      "uuid": "09505bb7-37e0-4755-8924-6bd0c2da9c90",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "grpc",
+        "service_name": "passgrpc43757"
+      },
+      "network": "tcp"
+    },
+    {
+      "type": "vless",
+      "tag": "kk9fc98y",
+      "server": "服务器IP或域名",
+      "server_port": 16375,
+      "uuid": "3940ecac-41fb-4611-8b35-4dc2a07b681d",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "伪装网站",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "LVFhRUmiHlSiPqJaZERPLCbyXl-GB_cyOUi1Hpsugl4",
+          "short_id": "e6"
+        }
+      },
+      "transport": {
+        "type": "grpc",
+        "service_name": "passgrpc16375"
+      },
+      "network": "tcp"
+    },
+    {
+      "type": "trojan",
+      "tag": "ws9qcnqo",
+      "server": "服务器IP或域名",
+      "server_port": 33982,
+      "password": "avwN94gCah",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "8lknstgw",
+      "server": "服务器IP或域名",
+      "server_port": 53084,
+      "password": "hanSL5FgLp",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "伪装网站",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "4ND5Yxt262qEXsoaWyCX9o_YeKwd2LURAMDdUUmAPFc",
+          "short_id": "56930fc4d70e3d5e"
+        }
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "sfcn8jj5",
+      "server": "服务器IP或域名",
+      "server_port": 30336,
+      "password": "HKlsJggpKy",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/HKlsJggpKy"
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "lbobxlit",
+      "server": "服务器IP或域名",
+      "server_port": 32957,
+      "password": "jYqrAftDcg",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "grpc",
+        "service_name": "passgrpc32957"
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "bvt3bmgq",
+      "server": "服务器IP或域名",
+      "server_port": 38819,
+      "password": "wbCFRLhU81",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "伪装网站",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "89bO8H88Zp0NY_EFdYN4ayX2Xwlu6f7nCbDtbJ7njDc",
+          "short_id": "015b"
+        }
+      },
+      "transport": {
+        "type": "grpc",
+        "service_name": "passgrpc38819"
+      }
+    },
+    {
+      "type": "trojan",
+      "tag": "sca3fv5e",
+      "server": "服务器IP或域名",
+      "server_port": 57067,
+      "password": "gTDGUliAcJ",
+      "network": "tcp",
+      "tcp_fast_open": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "服务器IP或域名",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "httpupgrade",
+        "path": "/gTDGUliAcJ"
+      }
+    },
+    {
+      "type": "selector",
+      "tag": "🏠 私有网络",
+      "outbounds": [
+        "🚀 节点选择",
+        "DIRECT",
+        "REJECT",
+        "⚡ 自动选择",
+        "pbiuh4n5",
+        "efpo4jhc",
+        "f3fgnk5n",
+        "vlrzmij3",
+        "3horoq3z",
+        "kkb9cxs5",
+        "ut5j6wic",
+        "kj3ta109",
+        "4avlmkkp",
+        "4812tams",
+        "kxdl6c8t",
+        "5yglhbj3",
+        "di8bthgj",
+        "wh5aoqhz",
+        "c2220n2l",
+        "7o7negp0",
+        "3jkv51z6",
+        "p3tzyoi1",
+        "85q5edtk",
+        "4x2auunj",
+        "y6l8wle3",
+        "7wwddb7z",
+        "54d2s5wi",
+        "f05oyuhp",
+        "2rq78y10",
+        "59308k8q",
+        "wa2uezw1",
+        "my2d32lt",
+        "g8p3i08o",
+        "tk9brz3y",
+        "nv7kqe5m",
+        "aoel0qic",
+        "mdt3db22",
+        "qsqpw28p",
+        "oq9c5d3u",
+        "5azolnri",
+        "5a542nf9",
+        "mp0qpeqv",
+        "kw64g76h",
+        "7jtfaqgj",
+        "2xqqs8jl",
+        "kk9fc98y",
+        "ws9qcnqo",
+        "8lknstgw",
+        "sfcn8jj5",
+        "lbobxlit",
+        "bvt3bmgq",
+        "sca3fv5e"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🔒 国内服务",
+      "outbounds": [
+        "🚀 节点选择",
+        "DIRECT",
+        "REJECT",
+        "⚡ 自动选择",
+        "pbiuh4n5",
+        "efpo4jhc",
+        "f3fgnk5n",
+        "vlrzmij3",
+        "3horoq3z",
+        "kkb9cxs5",
+        "ut5j6wic",
+        "kj3ta109",
+        "4avlmkkp",
+        "4812tams",
+        "kxdl6c8t",
+        "5yglhbj3",
+        "di8bthgj",
+        "wh5aoqhz",
+        "c2220n2l",
+        "7o7negp0",
+        "3jkv51z6",
+        "p3tzyoi1",
+        "85q5edtk",
+        "4x2auunj",
+        "y6l8wle3",
+        "7wwddb7z",
+        "54d2s5wi",
+        "f05oyuhp",
+        "2rq78y10",
+        "59308k8q",
+        "wa2uezw1",
+        "my2d32lt",
+        "g8p3i08o",
+        "tk9brz3y",
+        "nv7kqe5m",
+        "aoel0qic",
+        "mdt3db22",
+        "qsqpw28p",
+        "oq9c5d3u",
+        "5azolnri",
+        "5a542nf9",
+        "mp0qpeqv",
+        "kw64g76h",
+        "7jtfaqgj",
+        "2xqqs8jl",
+        "kk9fc98y",
+        "ws9qcnqo",
+        "8lknstgw",
+        "sfcn8jj5",
+        "lbobxlit",
+        "bvt3bmgq",
+        "sca3fv5e"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🌐 非中国",
+      "outbounds": [
+        "🚀 节点选择",
+        "DIRECT",
+        "REJECT",
+        "⚡ 自动选择",
+        "pbiuh4n5",
+        "efpo4jhc",
+        "f3fgnk5n",
+        "vlrzmij3",
+        "3horoq3z",
+        "kkb9cxs5",
+        "ut5j6wic",
+        "kj3ta109",
+        "4avlmkkp",
+        "4812tams",
+        "kxdl6c8t",
+        "5yglhbj3",
+        "di8bthgj",
+        "wh5aoqhz",
+        "c2220n2l",
+        "7o7negp0",
+        "3jkv51z6",
+        "p3tzyoi1",
+        "85q5edtk",
+        "4x2auunj",
+        "y6l8wle3",
+        "7wwddb7z",
+        "54d2s5wi",
+        "f05oyuhp",
+        "2rq78y10",
+        "59308k8q",
+        "wa2uezw1",
+        "my2d32lt",
+        "g8p3i08o",
+        "tk9brz3y",
+        "nv7kqe5m",
+        "aoel0qic",
+        "mdt3db22",
+        "qsqpw28p",
+        "oq9c5d3u",
+        "5azolnri",
+        "5a542nf9",
+        "mp0qpeqv",
+        "kw64g76h",
+        "7jtfaqgj",
+        "2xqqs8jl",
+        "kk9fc98y",
+        "ws9qcnqo",
+        "8lknstgw",
+        "sfcn8jj5",
+        "lbobxlit",
+        "bvt3bmgq",
+        "sca3fv5e"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🐟 漏网之鱼",
+      "outbounds": [
+        "🚀 节点选择",
+        "DIRECT",
+        "REJECT",
+        "⚡ 自动选择",
+        "pbiuh4n5",
+        "efpo4jhc",
+        "f3fgnk5n",
+        "vlrzmij3",
+        "3horoq3z",
+        "kkb9cxs5",
+        "ut5j6wic",
+        "kj3ta109",
+        "4avlmkkp",
+        "4812tams",
+        "kxdl6c8t",
+        "5yglhbj3",
+        "di8bthgj",
+        "wh5aoqhz",
+        "c2220n2l",
+        "7o7negp0",
+        "3jkv51z6",
+        "p3tzyoi1",
+        "85q5edtk",
+        "4x2auunj",
+        "y6l8wle3",
+        "7wwddb7z",
+        "54d2s5wi",
+        "f05oyuhp",
+        "2rq78y10",
+        "59308k8q",
+        "wa2uezw1",
+        "my2d32lt",
+        "g8p3i08o",
+        "tk9brz3y",
+        "nv7kqe5m",
+        "aoel0qic",
+        "mdt3db22",
+        "qsqpw28p",
+        "oq9c5d3u",
+        "5azolnri",
+        "5a542nf9",
+        "mp0qpeqv",
+        "kw64g76h",
+        "7jtfaqgj",
+        "2xqqs8jl",
+        "kk9fc98y",
+        "ws9qcnqo",
+        "8lknstgw",
+        "sfcn8jj5",
+        "lbobxlit",
+        "bvt3bmgq",
+        "sca3fv5e"
+      ]
+    }
+  ],
+  "route": {
+    "rule_set": [
+      {
+        "tag": "geolocation-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://gh.sageer.me/https://raw.githubusercontent.com/lyc8503/sing-box-rules/refs/heads/rule-set-geosite/geosite-geolocation-cn.srs"
+      },
+      {
+        "tag": "geolocation-!cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://gh.sageer.me/https://raw.githubusercontent.com/lyc8503/sing-box-rules/refs/heads/rule-set-geosite/geosite-geolocation-!cn.srs"
+      },
+      {
+        "tag": "private-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://gh.sageer.me/https://raw.githubusercontent.com/lyc8503/sing-box-rules/refs/heads/rule-set-geoip/geoip-private.srs"
+      },
+      {
+        "tag": "cn-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://gh.sageer.me/https://raw.githubusercontent.com/lyc8503/sing-box-rules/refs/heads/rule-set-geoip/geoip-cn.srs"
+      }
+    ],
+    "rules": [
+      {
+        "protocol": "dns",
+        "outbound": "dns-out"
+      },
+      {
+        "clash_mode": "direct",
+        "outbound": "DIRECT"
+      },
+      {
+        "clash_mode": "global",
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "rule_set": [
+          "private-ip"
+        ],
+        "outbound": "🏠 私有网络"
+      },
+      {
+        "rule_set": [
+          "geolocation-cn",
+          "cn-ip"
+        ],
+        "outbound": "🔒 国内服务"
+      },
+      {
+        "rule_set": [
+          "geolocation-!cn"
+        ],
+        "outbound": "🌐 非中国"
+      }
+    ],
+    "auto_detect_interface": true,
+    "final": "🐟 漏网之鱼"
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "store_fakeip": true
+    }
+  }
+}
